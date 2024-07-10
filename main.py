@@ -1,58 +1,14 @@
+import time
+
 import data
+import localizadores
+import metodos
 from selenium import webdriver
 from selenium.webdriver import Keys
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions
 from selenium.webdriver.support.wait import WebDriverWait
-
-
-# no modificar
-def retrieve_phone_code(driver) -> str:
-    """Este código devuelve un número de confirmación de teléfono y lo devuelve como un string.
-    Utilízalo cuando la aplicación espere el código de confirmación para pasarlo a tus pruebas.
-    El código de confirmación del teléfono solo se puede obtener después de haberlo solicitado en la aplicación."""
-
-    import json
-    import time
-    from selenium.common import WebDriverException
-    code = None
-    for i in range(10):
-        try:
-            logs = [log["message"] for log in driver.get_log('performance') if log.get("message")
-                    and 'api/v1/number?number' in log.get("message")]
-            for log in reversed(logs):
-                message_data = json.loads(log)["message"]
-                body = driver.execute_cdp_cmd('Network.getResponseBody',
-                                              {'requestId': message_data["params"]["requestId"]})
-                code = ''.join([x for x in body['body'] if x.isdigit()])
-        except WebDriverException:
-            time.sleep(1)
-            continue
-        if not code:
-            raise Exception("No se encontró el código de confirmación del teléfono.\n"
-                            "Utiliza 'retrieve_phone_code' solo después de haber solicitado el código en tu aplicación.")
-        return code
-
-
-class UrbanRoutesPage:
-    from_field = (By.ID, 'from')
-    to_field = (By.ID, 'to')
-
-    def __init__(self, driver):
-        self.driver = driver
-
-    def set_from(self, from_address):
-        self.driver.find_element(*self.from_field).send_keys(from_address)
-
-    def set_to(self, to_address):
-        self.driver.find_element(*self.to_field).send_keys(to_address)
-
-    def get_from(self):
-        return self.driver.find_element(*self.from_field).get_property('value')
-
-    def get_to(self):
-        return self.driver.find_element(*self.to_field).get_property('value')
-
+from metodos import UrbanRoutes
 
 
 class TestUrbanRoutes:
@@ -65,16 +21,46 @@ class TestUrbanRoutes:
         from selenium.webdriver import DesiredCapabilities
         capabilities = DesiredCapabilities.CHROME
         capabilities["goog:loggingPrefs"] = {'performance': 'ALL'}
-        cls.driver = webdriver.Chrome(desired_capabilities=capabilities)
+        cls.driver = webdriver.Chrome()
+        cls.driver.get(data.urban_routes_url)
 
     def test_set_route(self):
-        self.driver.get(data.urban_routes_url)
-        routes_page = UrbanRoutesPage(self.driver)
+        #self.driver.get(data.urban_routes_url)
+        routes_page = UrbanRoutes(self.driver)
         address_from = data.address_from
         address_to = data.address_to
-        routes_page.set_route(address_from, address_to)
+        time.sleep(3)
+        routes_page.setting_new_route()
         assert routes_page.get_from() == address_from
         assert routes_page.get_to() == address_to
+
+    def test_comfort_selection(self):
+        routes_page = UrbanRoutes(self.driver)
+        time.sleep(5)
+        routes_page.set_from_to_ask_taxi()
+        assert routes_page.get_after_comfort_button_selected() == 'Manta y pañuelos'
+
+    def test_submit_phone_number(self):
+        routes_page = UrbanRoutes(self.driver)
+        phone_number = data.phone_number
+        time.sleep(5)
+        #routes_page.write_new_phone_number()
+        assert routes_page.get_phone_number_input() == phone_number
+
+    def test_submit_new_card(self):
+        routes_page = UrbanRoutes(self.driver)
+        time.sleep(5)
+        #routes_page.submit_new_credit_card()
+        new_tc_registered = data.card_number
+        assert routes_page.get_new_tc_registered() == new_tc_registered
+
+    def test_new_comment(self):
+        routes_page = UrbanRoutes(self.driver)
+        time.sleep(5)
+        new_comment = data.message_for_driver
+        assert routes_page.get_comments() == new_comment
+
+
 
 
     @classmethod
