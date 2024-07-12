@@ -1,5 +1,4 @@
 import time
-
 import data
 import localizadores
 import metodos

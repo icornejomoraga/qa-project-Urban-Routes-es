@@ -69,17 +69,18 @@ class UrbanRoutes:
     def number_button(self):
         self.driver.find_element(*self.localizadores.phone_number_input).click()
 
-    def get_phone_number_input(self):
-        return self.driver.find_element(*self.localizadores.phone_number_input).get_property('value')
-
     def set_phone_number(self):
         number_phone = data.phone_number
         self.driver.find_element(*self.localizadores.new_phone_number).send_keys(number_phone)
 
-    def get_phone_number(self):
-        return self.driver.find_element(*self.localizadores.new_phone_number).get_property('value')
+    def get_phone_number_input(self):
+        return self.driver.find_element(*self.localizadores.new_phone_number).get('value')
+
+    #def get_phone_number(self):
+        #return self.driver.find_element(*self.localizadores.new_phone_number).get_property('value')
 
     def phone_number_button_submit(self):
+
         self.driver.find_element(*self.localizadores.phone_submit_button).click()
 
     def input_code(self):
