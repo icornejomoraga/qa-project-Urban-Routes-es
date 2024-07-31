@@ -43,24 +43,36 @@ class TestUrbanRoutes:
         routes_page = UrbanRoutes(self.driver)
         phone_number = data.phone_number
         time.sleep(5)
-        #routes_page.write_new_phone_number()
+        routes_page.write_new_phone_number()
         assert routes_page.get_phone_number_input() == phone_number
 
     def test_submit_new_card(self):
         routes_page = UrbanRoutes(self.driver)
         time.sleep(5)
-        #routes_page.submit_new_credit_card()
-        new_tc_registered = data.card_number
-        assert routes_page.get_new_tc_registered() == new_tc_registered
+        routes_page.submit_new_credit_card()
+        #new_tc_registered = data.card_number
+        assert routes_page.get_new_tc_registered() == 'Tarjeta'
+        routes_page.close_window()
 
     def test_new_comment(self):
         routes_page = UrbanRoutes(self.driver)
         time.sleep(5)
+        routes_page.message_to_control()
         new_comment = data.message_for_driver
         assert routes_page.get_comments() == new_comment
 
+    def test_blankets(self):
+        routes_page = UrbanRoutes(self.driver)
+        time.sleep(5)
+        routes_page.blankets()
+        assert routes_page.assert_blankets()
 
-
+    def test_ice_cream(self):
+        routes_page = UrbanRoutes(self.driver)
+        time.sleep(5)
+        routes_page.where_is_ice_cream()
+        routes_page.where_is_ice_cream()
+        assert routes_page.ice_cream_selected() == '2'
 
     @classmethod
     def teardown_class(cls):
