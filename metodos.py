@@ -1,10 +1,5 @@
-import main
 import data
-from selenium import webdriver
-from selenium.webdriver import Keys
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support import expected_conditions
-from selenium.webdriver.support.wait import WebDriverWait
+
 
 # no modificar
 
@@ -76,9 +71,6 @@ class UrbanRoutes:
     def get_phone_number_input(self):
         return self.driver.find_element(*self.localizadores.new_phone_number).get_property('value')
 
-    #def get_phone_number(self):
-        #return self.driver.find_element(*self.localizadores.new_phone_number).get_property('value')
-
     def phone_number_button_submit(self):
 
         self.driver.find_element(*self.localizadores.phone_submit_button).click()
@@ -121,7 +113,6 @@ class UrbanRoutes:
 
     def get_new_tc_registered(self):
         return self.driver.find_element(*self.localizadores.card_registered).text
-        #return self.driver.find_element(*self.localizadores.card_registered).get_property('class')
 
     def close_window(self):
         self.driver.find_element(*self.localizadores.close_button).click()
@@ -171,7 +162,6 @@ class UrbanRoutes:
         self.driver.find_element(*self.localizadores.card_submit).click()
 
     def message_to_control(self):
-        #self.driver.find_element(*self.localizadores.message).click()
         new_comment = data.message_for_driver
         self.driver.find_element(*self.localizadores.message).send_keys(new_comment)
 
@@ -184,3 +174,8 @@ class UrbanRoutes:
     def ice_cream_selected(self):
         return self.driver.find_element(*self.localizadores.ice_cream_plus).text
 
+    def click_the_blue_button(self):
+        self.driver.find_element(*self.localizadores.blue_button).click()
+
+    def modal_appears(self):
+        return self.driver.find_element(*self.localizadores.modal).text

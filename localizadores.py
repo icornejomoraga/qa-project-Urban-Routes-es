@@ -1,11 +1,5 @@
-import main
-import metodos
-import data
-from selenium import webdriver
-from selenium.webdriver import Keys
 from selenium.webdriver.common.by import By
-from selenium.webdriver.support import expected_conditions
-from selenium.webdriver.support.wait import WebDriverWait
+
 
 from_field = (By.ID, 'from')
 to_field = (By.ID, 'to')
@@ -30,6 +24,8 @@ blanket = (By.XPATH, "//*[@id='root']/div/div[3]/div[3]/div[2]/div[2]/div[4]/div
 blanket_on = (By.XPATH, "//*[@id='root']/div/div[3]/div[3]/div[2]/div[2]/div[4]/div[2]/div[1]/div/div[2]/div/input")
 ice_cream = (By.XPATH, "//*[@id='root']//div/div[3]/div[3]/div[2]/div[2]/div[4]/div[2]/div[3]/div/div[2]/div[1]/div/div[2]/div/div[3]")
 ice_cream_plus = (By. XPATH, "//*[@id='root']//div/div[3]/div[3]/div[2]/div[2]/div[4]/div[2]/div[3]/div/div[2]/div[1]/div/div[2]/div/div[2]")
-#"//div[@class='counter-value' and text()='2']")
+blue_button = (By.CLASS_NAME, 'smart-button-wrapper')
+modal = (By.CLASS_NAME, 'order-header-title')
+
 
 

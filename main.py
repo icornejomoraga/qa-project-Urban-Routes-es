@@ -1,12 +1,6 @@
 import time
 import data
-import localizadores
-import metodos
 from selenium import webdriver
-from selenium.webdriver import Keys
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support import expected_conditions
-from selenium.webdriver.support.wait import WebDriverWait
 from metodos import UrbanRoutes
 
 
@@ -24,7 +18,6 @@ class TestUrbanRoutes:
         cls.driver.get(data.urban_routes_url)
 
     def test_set_route(self):
-        #self.driver.get(data.urban_routes_url)
         routes_page = UrbanRoutes(self.driver)
         address_from = data.address_from
         address_to = data.address_to
@@ -50,7 +43,6 @@ class TestUrbanRoutes:
         routes_page = UrbanRoutes(self.driver)
         time.sleep(5)
         routes_page.submit_new_credit_card()
-        #new_tc_registered = data.card_number
         assert routes_page.get_new_tc_registered() == 'Tarjeta'
         routes_page.close_window()
 
@@ -73,6 +65,12 @@ class TestUrbanRoutes:
         routes_page.where_is_ice_cream()
         routes_page.where_is_ice_cream()
         assert routes_page.ice_cream_selected() == '2'
+
+    def test_modal_appears(self):
+        routes_page = UrbanRoutes(self.driver)
+        time.sleep(5)
+        routes_page.click_the_blue_button()
+        assert routes_page.modal_appears() == 'Buscar automóvil'
 
     @classmethod
     def teardown_class(cls):
