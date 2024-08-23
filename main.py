@@ -1,8 +1,10 @@
 import time
 import data
+import localizadores
 from selenium import webdriver
 from metodos import UrbanRoutes
-
+from selenium.webdriver.support.wait import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
 class TestUrbanRoutes:
 
@@ -21,7 +23,7 @@ class TestUrbanRoutes:
         routes_page = UrbanRoutes(self.driver)
         address_from = data.address_from
         address_to = data.address_to
-        time.sleep(3)
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located(localizadores.from_field))
         routes_page.setting_new_route()
         assert routes_page.get_from() == address_from
         assert routes_page.get_to() == address_to
@@ -68,7 +70,7 @@ class TestUrbanRoutes:
 
     def test_modal_appears(self):
         routes_page = UrbanRoutes(self.driver)
-        time.sleep(5)
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located(localizadores.blue_button))
         routes_page.click_the_blue_button()
         assert routes_page.modal_appears() == 'Buscar automóvil'
 

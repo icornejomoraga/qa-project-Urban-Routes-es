@@ -4,6 +4,7 @@ import data
 # no modificar
 
 
+
 def retrieve_phone_code(driver) -> str:
     """Este código devuelve un número de confirmación de teléfono y lo devuelve como un string.
     Utilízalo cuando la aplicación espere el código de confirmación para pasarlo a tus pruebas.
