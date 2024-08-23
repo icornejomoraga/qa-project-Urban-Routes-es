@@ -12,4 +12,4 @@
 - Los localizadores para individualizar los items se buscan en el html del codigo de la pagina y se utilizan por medio de ID, Clase, Input, Xpath y CSS
 - se utilizan esperas en las pruebas para darle tiempo al navegador que cargue elemntos de la pagina
 - En total son 8 pruebas que validan que el flujo de solicitud de taxi sea exitoso, desde el ingreso de direccionde inicio-termino de viaje hasta que aparece el modal de busqueda de taxi
-- se usa el comando pytest nombre.py para correr las pruebas desde la terminal
+- se usa el comando pytest main.py para correr las pruebas desde la terminal
